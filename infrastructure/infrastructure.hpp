@@ -1,5 +1,5 @@
-#ifndef INFRASTURUCTURE_HPP
-#define INFRASTURUCTURE_HPP
+#ifndef INFRASTRUCTURE_HPP
+#define INFRASTRUCTURE_HPP
 
 #include <iostream>
 
