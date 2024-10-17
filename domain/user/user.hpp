@@ -12,12 +12,12 @@ public:
     string surname;
     string phoneNumber;
     string email;
-    string notes;
+    string address;
 
     User() = default;
 
-    User(string name, string surname, string phone, string email, string notes)
-        : name(std::move(name)), surname(std::move(surname)), phoneNumber(std::move(phone)), email(std::move(email)), notes(std::move(notes)) {}
+    User(string name, string surname, string phone, string email, string address)
+        : name(std::move(name)), surname(std::move(surname)), phoneNumber(std::move(phone)), email(std::move(email)), address(std::move(address)) {}
 };
 
 #endif

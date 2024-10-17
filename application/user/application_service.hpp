@@ -7,12 +7,12 @@
 using namespace std;
 
 namespace ApplicationServer {
-    inline void addUser(pqxx::work& W, const string& name, const string& surname, const string& phone, const string& email, const string& notes) {
-        DomainService::addUser(name, surname, phone, email, notes, W);
+    inline void addUser(pqxx::work& W, const string& name, const string& surname, const string& phone, const string& email, const string& address) {
+        DomainService::addUser(name, surname, phone, email, address, W);
     }
 
-    inline void updateUser(pqxx::work& W, const int id, const string& name, const string& surname, const string& phone, const string& email, const string& notes) {
-        DomainService::updateUser(id, name, surname, phone, email, notes, W);
+    inline void updateUser(pqxx::work& W, const int id, const string& name, const string& surname, const string& phone, const string& email, const string& address) {
+        DomainService::updateUser(id, name, surname, phone, email, address, W);
     }
 
     inline void deleteUser(const int id, pqxx::work& W) {

@@ -1,9 +1,11 @@
 #ifndef REPOSITORY2_HPP
 #define REPOSITORY2_HPP
 
-#include <pqxx/pqxx>
+
 #include "product.hpp"
 #include "factory.hpp"
+#include <pqxx/pqxx>
+
 
 using namespace std;
 
@@ -20,13 +22,12 @@ namespace Repository {
 
     inline void deleteProduct(const int id, pqxx::work& W) {
         W.exec_params("DELETE FROM products WHERE id = $1", to_string(id));
-        W.commit();
     }
 
     inline vector<Product> listProducts(pqxx::connection& db_connection) {
         pqxx::nontransaction N(db_connection);
         const pqxx::result result = N.exec("SELECT id, name, price, quantity FROM products");
-        return ProductFactory::createFromResult(result);
+        return Factory::createProductFromResult(result);
     }
 }
 

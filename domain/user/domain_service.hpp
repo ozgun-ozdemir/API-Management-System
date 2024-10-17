@@ -3,18 +3,18 @@
 
 #include "repository.hpp"
 #include "user.hpp"
-#include "basket/basket.hpp"
+
 
 using namespace std;
 
 namespace DomainService {
-    inline void addUser(const string& name, const string& surname, const string& phone, const string& email, const string& notes, pqxx::work& W) {
-        const User user{name, surname, phone, email, notes};
+    inline void addUser(const string& name, const string& surname, const string& phone, const string& email, const string& address, pqxx::work& W) {
+        const User user{name, surname, phone, email, address};
         Repository::addUser(user, W);
     }
 
-    inline void updateUser(const int id, const string& name, const string& surname, const string& phone, const string& email, const string& notes, pqxx::work& W) {
-        User user{name, surname, phone, email, notes};
+    inline void updateUser(const int id, const string& name, const string& surname, const string& phone, const string& email, const string& address, pqxx::work& W) {
+        User user{name, surname, phone, email, address};
         user.id = id;
         Repository::updateUser(user, W);
     }

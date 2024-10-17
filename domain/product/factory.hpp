@@ -7,12 +7,12 @@
 
 using namespace std;
 
-namespace ProductFactory {
+namespace Factory {
     inline Product create(const string& name, const string& price, const string& quantity) {
         return Product{name, price, quantity};
     }
 
-    inline vector<Product> createFromResult(const pqxx::result& result) {
+    inline vector<Product> createProductFromResult(const pqxx::result& result) {
         vector<Product> productList;
 
         for (const auto& row : result) {

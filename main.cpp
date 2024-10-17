@@ -5,7 +5,7 @@
 #include "../infrastructure/infrastructure.hpp"
 #include "product/application_service.hpp"
 #include "user/application_service.hpp"
-#include "basket/application_service.hpp"
+#include "order/application_service.hpp"
 
 
 using namespace std;
@@ -40,10 +40,10 @@ int main() {
         string surname = json["surname"].s();
         string phoneNumber = json["phone_number"].s();
         string email = json["email"].s();
-        string notes = json["notes"].s();
+        string address = json["address"].s();
 
         try {
-            ApplicationServer::addUser(W, name, surname, phoneNumber, email, notes);
+            ApplicationServer::addUser(W, name, surname, phoneNumber, email, address);
             W.commit();
             return crow::response(201, "User added successfully!");
 
@@ -66,10 +66,10 @@ int main() {
         string surname = json["surname"].s();
         string phoneNumber = json["phone_number"].s();
         string email = json["email"].s();
-        string notes = json["notes"].s();
+        string address = json["address"].s();
 
         try {
-            ApplicationServer::updateUser(W, id, name, surname, phoneNumber, email, notes);
+            ApplicationServer::updateUser(W, id, name, surname, phoneNumber, email, address);
             W.commit();
             return crow::response(200, "User updated successfully!");
         } catch (const exception& e) {
@@ -172,36 +172,35 @@ int main() {
             }
         });
 
-//basket
+//order
 
-    CROW_ROUTE(app, "/baskets").methods("GET"_method)([]() {
+    CROW_ROUTE(app, "/orders").methods("GET"_method)([]() {
     pqxx::connection& dbConnection = getDatabaseConnection();
-    return ApplicationServer::listBaskets(dbConnection);
+    return ApplicationServer::listOrders(dbConnection);
 });
 
-    CROW_ROUTE(app, "/baskets/add").methods("POST"_method)([](const crow::request& req) {
-        pqxx::connection& dbConnection = getDatabaseConnection();
-        pqxx::work W(dbConnection);
-        auto json = crow::json::load(req.body);
-        if (!json) {
-            return crow::response(400, "Invalid JSON");
-        }
+    CROW_ROUTE(app, "/orders/add").methods("POST"_method)([](const crow::request& req) {
+    pqxx::connection& dbConnection = getDatabaseConnection();
+    pqxx::work W(dbConnection);
+    auto json = crow::json::load(req.body);
+    if (!json) {
+        return crow::response(400, "Invalid JSON");
+    }
 
-        const int userId = json["user_id"].i();
-        const int productId = json["product_id"].i();
-        const string shoppingDate = json["shopping_date"].s();
+    const int userId = json["user_id"].i();
+    const int productId = json["product_id"].i();
 
-        try {
-            ApplicationServer::addBasket(W, userId, productId, shoppingDate);
-            W.commit();
-            return crow::response(201, "Basket added successfully!");
-        } catch (const std::exception& e) {
-            W.abort();
-            return crow::response(500, e.what());
-        }
-    });
+    try {
+        ApplicationServer::addOrder(W, userId, productId);
+        W.commit();
+        return crow::response(201, "Order added successfully!");
+    } catch (const exception& e) {
+        W.abort();
+        return crow::response(500, e.what());
+    }
+});
 
-    CROW_ROUTE(app, "/baskets/delete").methods("DELETE"_method)([](const crow::request& req) {
+    CROW_ROUTE(app, "/orders/delete").methods("DELETE"_method)([](const crow::request& req) {
         pqxx::connection& dbConnection = getDatabaseConnection();
         pqxx::work W(dbConnection);
         const auto json = crow::json::load(req.body);
@@ -211,10 +210,10 @@ int main() {
         int id = json["id"].i();
 
         try {
-            ApplicationServer::deleteBasket(id, W);
+            ApplicationServer::deleteOrder(id, W);
             W.commit();
-            return crow::response(200, "Basket deleted successfully!");
-        } catch (const std::exception& e) {
+            return crow::response(200, "Order deleted successfully!");
+        } catch (const exception& e) {
             W.abort();
             return crow::response(500, e.what());
         }

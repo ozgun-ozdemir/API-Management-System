@@ -1,28 +1,24 @@
 #ifndef DTO_ASSEMBLER_HPP
 #define DTO_ASSEMBLER_HPP
 
-#include <crow/json.h>
-#include <vector>
-#include "user/user.hpp"
-
 namespace DtoAssembler {
 
     inline crow::json::wvalue toJson(const vector<User>& users) {
-        crow::json::wvalue::list userList;
+        crow::json::wvalue::list jsonUserList;
         crow::json::wvalue jsonUser;
 
-        for (const auto& [id, name, surname, phoneNumber, email, notes] : users) {
+        for (const auto& [id, name, surname, phoneNumber, email, address] : users) {
             jsonUser["id"] = id;
             jsonUser["name"] = name;
             jsonUser["surname"] = surname;
             jsonUser["phone_number"] = phoneNumber;
             jsonUser["email"] = email;
-            jsonUser["notes"] = notes;
+            jsonUser["address"] = address;
 
-            userList.push_back(jsonUser);
+            jsonUserList.push_back(jsonUser);
         }
 
-        return userList;
+        return jsonUserList;
     }
 };
 
