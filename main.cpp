@@ -179,6 +179,27 @@ int main() {
     return ApplicationServer::listOrders(dbConnection);
 });
 
+    CROW_ROUTE(app, "/order").methods("POST"_method)([](const crow::request& req) {
+        pqxx::connection& dbConnection = getDatabaseConnection();
+        const auto json = crow::json::load(req.body);
+      if (!json) {
+          return crow::response(400, "Invalid JSON body");
+      }
+
+      const int id = json["id"].i();
+
+        try {
+            if (!id) {
+           return crow::response(404, "Order not found");
+       }
+            return crow::response(ApplicationServer::getOrderById(id, dbConnection));
+
+        } catch (const exception& e) {
+            logError(e.what());
+            return crow::response(500, e.what());
+        }
+  });
+
     CROW_ROUTE(app, "/orders/add").methods("POST"_method)([](const crow::request& req) {
     pqxx::connection& dbConnection = getDatabaseConnection();
     pqxx::work W(dbConnection);

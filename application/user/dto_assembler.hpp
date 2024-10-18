@@ -5,9 +5,10 @@ namespace DtoAssembler {
 
     inline crow::json::wvalue toJson(const vector<User>& users) {
         crow::json::wvalue::list jsonUserList;
-        crow::json::wvalue jsonUser;
+
 
         for (const auto& [id, name, surname, phoneNumber, email, address] : users) {
+            crow::json::wvalue jsonUser;
             jsonUser["id"] = id;
             jsonUser["name"] = name;
             jsonUser["surname"] = surname;

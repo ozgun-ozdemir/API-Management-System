@@ -19,13 +19,12 @@ namespace Factory {
             order.shoppingDate = row["shopping_date"].as<string>();
             order.userName = row["user_name"].as<string>();
             order.userSurname = row["user_surname"].as<string>();
-           order.userPhone = row["user_phone"].as<string>();
-           order.userEmail = row["user_email"].as<string>();
-           order.userAddress = row["user_address"].as<string>();
+            order.userPhone = row["user_phone"].as<string>();
+            order.userEmail = row["user_email"].as<string>();
+            order.userAddress = row["user_address"].as<string>();
             order.productName = row["product_name"].as<string>();
             order.productPrice = row["product_price"].as<string>();
             order.productQuantity = row["product_quantity"].as<string>();
-
 
             orderList.push_back(order);
         }

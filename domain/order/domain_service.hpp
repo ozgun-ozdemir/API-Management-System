@@ -31,6 +31,10 @@ namespace DomainService {
     inline vector<Order> listOrders(pqxx::connection& dbConnection) {
         return Repository::listOrders(dbConnection);
     }
+
+    inline Order getOrderById(const int id, pqxx::connection& dbConnection) {
+        return Repository::getOrderById(id, dbConnection);
+    }
 }
 
 #endif

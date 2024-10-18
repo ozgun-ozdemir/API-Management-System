@@ -19,6 +19,11 @@ namespace ApplicationServer {
         const vector<Order> orders = DomainService::listOrders(dbConnection);
         return DtoAssembler::toJson(orders);
     }
+
+    inline crow::json::wvalue getOrderById(const int id, pqxx::connection& dbConnection) {
+        const Order order = DomainService::getOrderById(id, dbConnection);
+        return DtoAssembler::toJson({order});
+    }
 }
 
 #endif // ORDER_APPLICATION_HPP

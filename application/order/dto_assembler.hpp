@@ -7,9 +7,10 @@ namespace DtoAssembler {
 
     inline crow::json::wvalue toJson(const vector<Order>& orders) {
         crow::json::wvalue::list jsonOrderList;
-        crow::json::wvalue jsonOrder;
+
 
         for (const auto& order : orders) {
+            crow::json::wvalue jsonOrder;
             jsonOrder["id"] = order.id;
             jsonOrder["user_id"] = order.userId;
             jsonOrder["product_id"] = order.productId;
@@ -28,6 +29,7 @@ namespace DtoAssembler {
 
         return jsonOrderList;
     }
+
 }
 
 #endif

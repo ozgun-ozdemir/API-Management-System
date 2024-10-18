@@ -21,22 +21,47 @@ namespace Repository {
     inline vector<Order> listOrders(pqxx::connection& dbConnection) {
         pqxx::nontransaction N(dbConnection);
         const pqxx::result result = N.exec("SELECT "
-                                           "o.id AS order_id,"
-                                           " u.id AS user_id, "
-                                           "p.id AS product_id,"
-                                           "u.name AS user_name,"
-                                           "u.surname AS user_surname,"
-                                           "u.phone_number AS user_phone,"
-                                           "u.email AS user_email,"
-                                           "u.address AS user_address,"
-                                           "p.name AS product_name,"
-                                           "p.price AS product_price,"
-                                           "p.quantity AS product_quantity,"
-                                           "o.shopping_date"
-                                           "FROM orders o"
-                                           " INNER JOIN users u ON o.user_id = u.id"
-                                           " INNER JOIN products p ON o.product_id = p.id");
+                                           "o.id AS order_id, "
+                                           "u.id AS user_id, "
+                                           "p.id AS product_id, "
+                                           "u.name AS user_name, "
+                                           "u.surname AS user_surname, "
+                                           "u.phone_number AS user_phone, "
+                                           "u.email AS user_email, "
+                                           "u.address AS user_address, "
+                                           "p.name AS product_name, "
+                                           "p.price AS product_price, "
+                                           "p.quantity AS product_quantity, "
+                                           "o.shopping_date "
+                                           "FROM orders o "
+                                           "INNER JOIN users u ON o.user_id = u.id "
+                                           "INNER JOIN products p ON o.product_id = p.id ");
         return Factory::createOrderFromResult(result);
+    }
+
+    inline Order getOrderById(int id, pqxx::connection& dbConnection) {
+        pqxx::nontransaction N(dbConnection);
+        const pqxx::result result = N.exec_params(
+            "SELECT "
+            "o.id AS order_id, "
+            "u.id AS user_id, "
+            "p.id AS product_id, "
+            "u.name AS user_name, "
+            "u.surname AS user_surname, "
+            "u.phone_number AS user_phone, "
+            "u.email AS user_email, "
+            "u.address AS user_address, "
+            "p.name AS product_name, "
+            "p.price AS product_price, "
+            "p.quantity AS product_quantity, "
+            "o.shopping_date "
+            "FROM orders o "
+            "INNER JOIN users u ON o.user_id = u.id "
+            "INNER JOIN products p ON o.product_id = p.id "
+            "WHERE o.id = $1",
+            id);
+
+        return Factory::createOrderFromResult(result).front();
     }
 }
 
