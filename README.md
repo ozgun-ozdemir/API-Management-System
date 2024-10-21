@@ -17,26 +17,22 @@ This project implements a simple RESTful API using the Crow micro framework and 
 -  Users Table
    CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    surname VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(15),
-    email VARCHAR(100) UNIQUE NOT NULL,
-    address TEXT
-);
+    name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(20),
+    email VARCHAR(50) UNIQUE NOT NULL,
+    address TEXT);
 
 - Products Table
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    quantity INT NOT NULL CHECK (quantity >= 0)
-
-);
+    price int NOT NULL,
+    quantity INT NOT NULL CHECK);
 
 - Orders Table
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     product_id INT REFERENCES products(id) ON DELETE CASCADE,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
