@@ -14,7 +14,7 @@ This project implements a simple RESTful API using the Crow micro framework and 
 
 ## Installation
 **Create the database and table: CREATE DATABASE your_database_name;**:
--  Users Table
+-  Users Table -
    CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -23,14 +23,14 @@ This project implements a simple RESTful API using the Crow micro framework and 
     email VARCHAR(50) UNIQUE NOT NULL,
     address TEXT);
 
-- Products Table
+- Products Table -
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     price int NOT NULL,
     quantity INT NOT NULL CHECK);
 
-- Orders Table
+- Orders Table -
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
